@@ -24,36 +24,71 @@
     <ion-nav-bar class="nav-title-slide-ios7 bar-positive" animation="nav-title-slide-ios7">
           <ion-nav-back-button class="button-icon ion-arrow-left-c">
           </ion-nav-back-button>
+
     </ion-nav-bar>
 
   <!-- where the initial view template will be rendered -->
   <ion-nav-view animation="slide-left-right"></ion-nav-view>
 </body>
-<script id="home.html" type="text/ng-template" ng-controller="MainCtrl">
+<script id="home.html" type="text/ng-template" ng-controller="MainCtrl" >
 <ion-view title="Flyr">
-     <ion-content has-header="true" padding="true">
+     <ion-nav-buttons side="right">
+        <a class="button button-icon icon ion-gear-b" ng-click="modal.show()">        
+        </a>
+     </ion-nav-buttons>
+     <ion-content has-header="true">
+        
         <!-- Center content -->
         <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()" ></ion-refresher>
         <ion-list option-buttons="itemButtons">
-            <ion-item ng-repeat="item in items" item="item" can-swipe="true" href="#/{{item.type}}/{{item.id}}">
-                {{item.name}}
+            <ion-item can-swipe="false"> 
+            <center><b class="positive icon ion-location"> {{currentLocation}} </b> </center>
+            </ion-item>
+            <ion-item class="item-avatar" ng-repeat="item in items" item="item" can-swipe="true" href="#/{{item.type}}/{{item.id}}">
+                <img src="{{item.type}}.jpg"></img> <div style="float:right"> {{item.date}} </div> 
+                <h2> {{item.name}} </h2> 
+                <p> {{item.summary}}</p>
             </ion-item>
         </ion-list>
       </ion-content>
   </ion-view>
 </script>
 <script id="infoflyer.html" type="text/ng-template">
-<ion-view title="Information Flyer" left-buttons="leftButtons" right-buttons="rightButtons">
+<ion-view title="Information Flyer">
   <div ng-controller="InfoFlyerCtrl">
-    {{ getFlyer() }}
-     <ion-content has-header="true" padding="true">
+     <ion-content has-header="true">
         <!-- Center content -->
-        <ion-pane>
-            
-        </ion-pane>
-      </ion-content>
+        <div class="list card">
+          <div class="item item-text-wrap">
+            <h2>{{flyer.name}}</h2>
+            <p>{{flyer.summary}}</p>
+          </div>
+          <div class="item item-body">
+            <img class="full-image" src={{flyer.img}}></img>
+            <p>{{flyer.content}}</p>
+          </div>
+            <div class="item tabs tabs-secondary tabs-icon-left" id="tabs"></div>
+        </div>
+        </ion-content>
   </div>
   </ion-view>
+</script>
+<script id="modal.html" type="text/ng-template">
+  <div class="modal" ng-controller="ModalCtrl">
+    <ion-header-bar class="bar bar-header bar-positive">
+      <h1 class="title">Settings</h1>
+      <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+    </ion-header-bar>
+    <ion-content>
+      <div class="padding">
+        <div class="list">
+          <ion-toggle ng-model="infosettings">Information</ion-toggle>
+          <ion-toggle ng-model="studentpromo">Student Promotions</ion-toggle>
+          <ion-toggle ng-model="genpromo">General Promotions</ion-toggle>
+        </div>
+      </div>
+    </ion-content>
+  </div>
 </script>
 
 </html>
