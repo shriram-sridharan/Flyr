@@ -20,6 +20,7 @@
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/cordova_plugins.js \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/index.html \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/lib \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/plugins \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/img/ionic.png \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/js/app.js \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/lib/angular-ui-router \
@@ -174,4 +175,13 @@
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/lib/ionic/js/ionic.bundle.js \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/lib/ionic/js/ionic.min.js \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/lib/ionic/js/ionic-angular.js \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/plugins/org.apache.cordova.device \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/plugins/org.apache.cordova.geolocation \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/plugins/org.apache.cordova.device/www \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/plugins/org.apache.cordova.device/www/device.js \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/plugins/org.apache.cordova.geolocation/www \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/plugins/org.apache.cordova.geolocation/www/geolocation.js \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/plugins/org.apache.cordova.geolocation/www/Position.js \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/plugins/org.apache.cordova.geolocation/www/PositionError.js \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/plugins/org.apache.cordova.geolocation/www/Coordinates.js \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/AndroidManifest.xml \

@@ -4,7 +4,13 @@
     <feature name="App">
         <param name="android-package" value="org.apache.cordova.App" />
     </feature>
-    <name>HelloCordova</name>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="Geolocation">
+        <param name="android-package" value="org.apache.cordova.geolocation.GeoBroker" />
+    </feature>
+    <name>Flyr</name>
     <description>
         An Ionic Framework and Cordova project.
     </description>
@@ -20,7 +26,5 @@
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
-    <feature name="Device">
-        <param name="android-package" value="org.apache.cordova.device.Device" />
-    </feature>
+    <feature name="http://api.phonegap.com/1.0/geolocation" />
 </widget>

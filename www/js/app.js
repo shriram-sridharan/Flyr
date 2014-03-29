@@ -22,21 +22,66 @@ angular.module('flyr', ['ionic'])
       controller: 'MainCtrl'
     })
     .state('infoflyer', {
-      url: "/infoflyer",
-      templateUrl: "infoflyer.html",
-      controller: 'InfoFlyerCtrl'
+      url: "/infoflyer/:itemId",
+      templateUrl: "infoflyer.html"
     })
 
     // if none of the above are matched, go to this one
     $urlRouterProvider.otherwise("/home");
 })
 
-.controller('InfoFlyerCtrl', function($scope) {
-
+.controller('InfoFlyerCtrl', function($scope, $stateParams) {
+  var i = 0;
+  $scope.getFlyer = function() {
+    alert("Getting Flyer" + i);
+  }
 })
 
-.controller('MainCtrl', function($scope) {
+.value('latitute', 0)
+.value('longitude', 0)
+
+.controller('GeoLocationCtrl', function($scope, $interval, $ionicPlatform, $ionicLoading) {
+  function locationGetOnError(error) {
+    //Put this in pop up later
+        alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+        alert('Please kill and restart app \n');
+  }
+
+  function getLoc() {
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+      
+      $scope.loading.hide();
+                // var R = 6371;
+                // // km, haversine formula
+                // var x1 = newlatitude - latitude;
+                // var dLat = x1 * Math.PI / 180;
+                // var x2 = newlongitude - longitude;
+                // var dLon = x2 * Math.PI / 180;
+                // var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(latitude * Math.PI / 180) * Math.cos(newlatitude * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                // var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                // var d = R * c;
+                // alert(d);
+
+    }, locationGetOnError, 
+    { maximumAge: 3000, timeout: 50000, enableHighAccuracy: true });
+  }
+
+  $ionicPlatform.ready(function(){
+    $scope.loading = $ionicLoading.show({
+      content: 'Getting current location...',
+      showBackdrop: false
+    });
+    getLoc();
+    $interval(getLoc, 10000);
+  });
+})
+
+.controller('MainCtrl', function($scope, $timeout) {
   // Our controller
+
   $scope.toggleLeft = function(){
   	$ionicSideMenuDelegate.toggleLeft();
   };
@@ -54,24 +99,27 @@ angular.module('flyr', ['ionic'])
   }];
 
   $scope.doRefresh = function() {
-  	$scope.items.push({name:"new1"}); // Refresher problematic in ionic beta version. Use old version?
+    alert('lat:' + latitude + ',long:' + longitude);
+    $timeout( function() {
+  	 $scope.items.push({name:"new1"}); // Refresher problematic in ionic beta version. Use old version?
+    });
   	$scope.$broadcast('scroll.refreshComplete');
   };
 
-  $scope.itemButtons = [
-  {
-  	text: 'Edit',
-  	type: 'Button',
-  	onTap: function(item) {
-  		alert('Edit Item: ' + item.id);
-  	}
-  },
-  {
-  	text: 'Share',
-  	type: 'Button',
-  	onTap: function(item) {
-  		alert('Share Item: ' + item.id);
-  	}
-  }
+$scope.itemButtons = [
+    {
+      text: 'Edit',
+      type: 'button-assertive',
+      onTap: function(item) {
+        alert('Edit Item: ' + item.id);
+      }
+    },
+    {
+      text: 'Share',
+      type: 'button-calm',
+      onTap: function(item) {
+        alert('Share Item: ' + item.id);
+      }
+    }
   ];
 })
