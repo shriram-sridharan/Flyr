@@ -1,10 +1,16 @@
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes.dex : \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/plugin/gcm/CordovaGCMBroadcastReceiver.class \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/plugin/gcm/GCMIntentService.class \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/plugin/gcm/PushHandlerActivity.class \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/plugin/gcm/PushPlugin.class \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/ionicframework/starter/HelloCordova.class \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/ionicframework/starter/BuildConfig.class \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/ionicframework/starter/R$drawable.class \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/ionicframework/starter/R.class \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/ionicframework/starter/Manifest.class \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/ionicframework/starter/R$string.class \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/ionicframework/starter/R$xml.class \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/ionicframework/starter/Manifest$permission.class \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/com/ionicframework/starter/R$attr.class \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/org/apache/cordova/geolocation/GeoBroker.class \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/org/apache/cordova/geolocation/CordovaLocationListener.class \
@@ -13,3 +19,5 @@
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/org/apache/cordova/geolocation/NetworkListener.class \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/classes/org/apache/cordova/device/Device.class \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/dexedLibs/classes-a8b52561d8aefd730f819a59b6fadf8d.jar \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/dexedLibs/gcm-6f7a470837ab597704821a51fbaabf0a.jar \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/dexedLibs/android-support-v13-3e14202db702c2239173975d61dc0c94.jar \

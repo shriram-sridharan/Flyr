@@ -3,13 +3,77 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
+
+function showPlayStore(url) {
+  window.open(url);
+}
+
+function onNotificationGCM(e) {
+  switch( e.event )
+  {
+    case 'registered':
+    if ( e.regid.length > 0 )
+    {
+      console.log("Regid " + e.regid);
+      alert('registration id = '+e.regid);
+    }
+    break;
+
+    case 'message':
+    // this is the actual push notification. its format depends on the data model from the push server
+    alert('message = '+e.payload.message+' msgcnt = '+e.payload.msgcnt);
+    break;
+
+    case 'error':
+    alert('GCM error = '+e.msg);
+    break;
+
+    default:
+    alert('An unknown GCM event has occurred');
+    break;
+  }
+}
+
 angular.module('flyr', ['ionic'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $ionicLoading) {
 	$ionicPlatform.ready(function() {
 		if(window.StatusBar) {
 			StatusBar.styleDefault();
 		}
+
+    /*
+    Push Notification Registration
+    */
+    var loading = $ionicLoading.show({
+      content: 'Registering device for Push Notifications...',
+      showBackdrop: false
+    });
+
+    function successHandler(result) {
+      alert('Callback Success! Result = '+result);
+      loading.hide();
+    }
+
+    function errorHandler (error) {
+      alert('error = ' + error);
+      loading.hide();
+    }
+
+    /*
+      TODO: Ask here for user about his wish for sending push notifications
+    */
+    var pushNotification = window.plugins.pushNotification;
+    if (device.platform == 'android' || device.platform == 'Android' )
+    {
+      pushNotification.register(successHandler, errorHandler, 
+        {"senderID":"44227676919","ecb":"onNotificationGCM"});
+    }
+    else {
+      alert("Error. Cannot set Push Notifications.");
+      loading.hide();
+    }
+
 	});
 })
 
@@ -45,40 +109,39 @@ angular.module('flyr', ['ionic'])
     name : "Shriram Sridharan",
     summary: 'PhD Prelim - CS1240 - 4/21/2014 - 10:00 AM',
     content: 'This is the PhD prelim of Mr. Shriram Sridharan advised by Prof. Jignesh Patel',
+    img: 'http://flagship.americancouncils.org/russian/sites/flagship.americancouncils.org.russian/files/images/UW-Madison_logo.gif',
     email: 'shrirams@cs.wisc.edu',
     phonenumber: '4087725271',
-    playstore: 'https://play.google.com/store/apps/details?id=oldcask.ocr.android.activities&feature=search_result',
+    playstore: 'details?id=oldcask.ocr.android.activities&feature=search_result',
     appstore: '',
-  }
-  function call() {
-    document.location.href = 'tel:+1' + $scope.flyer['phonenumber'];
   }
 
   function getFlyer() {
     //alert("Getting Flyer" + i);
     $scope.flyer = flyer;
-    if ($scope.flyer['phonenumber']) {
+    if ($scope.flyer['phonenumber'] != undefined) {
       //alert($scope.flyer['phonenumber']);
       document.getElementById('tabs').innerHTML = document.getElementById('tabs').innerHTML +
       "<a class='tab-item' href='tel:+1"+ $scope.flyer['phonenumber'] +"'> Call " +
       "<i class='icon ion-android-call assertive'></i></button>";
     }
-    if ($scope.flyer['phonenumber']) {
+    if ($scope.flyer['email'] != undefined) {
       //alert($scope.flyer['phonenumber']);
       document.getElementById('tabs').innerHTML = document.getElementById('tabs').innerHTML +
       "<a class='tab-item' href='mailto:"+ $scope.flyer['email'] +"'> EMail " +
       "<i class='icon ion-android-mail positive'></i></button>";
     }
 
-    if ($scope.flyer['playstore']) {
+    if ($scope.flyer['playstore'] != undefined) {
       //alert($scope.flyer['phonenumber']);
       document.getElementById('tabs').innerHTML = document.getElementById('tabs').innerHTML +
-      "<a class='tab-item' href='"+ $scope.flyer['playstore'] +"'> Download App " + 
+      "<a class='tab-item' href='market://"+ $scope.flyer['playstore'] +"'> " + 
+      " Download App " + 
       "<i class='icon ion-android-playstore balanced'></i></button>";
     }
   }
 
-//img: 'http://flagship.americancouncils.org/russian/sites/flagship.americancouncils.org.russian/files/images/UW-Madison_logo.gif',
+
   $ionicPlatform.ready(function(){
     getFlyer();
   });
@@ -93,6 +156,7 @@ angular.module('flyr', ['ionic'])
     //TODO: Put this in pop up later or remove it or retry
     alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
     alert('Please kill and restart app \n');
+    $scope.loading.hide();
   }
 
   function getLoc() {
@@ -101,21 +165,25 @@ angular.module('flyr', ['ionic'])
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
       
-      $scope.loading.hide();
-      $http.post('http://127.0.0.1:8000/getLoc',{'lat':''+latitude,'lng':''+longitude})
+      $http.post('http://ec2-54-201-190-159.us-west-2.compute.amazonaws.com:8000/getLoc',
+        {'lat':''+latitude,'lng':''+longitude})
       .success(function(data, status, headers, config) {
           // var json = JSON.stringify(eval("(" + data + ")"));
           $scope.currentLocation = data[0].loc;
+          $scope.loading.hide();
           // console.log(json);
       })
       .error(function(data, status) {
         //TODO: Change to pop up
           alert("Error Getting Location. Please try again later");
+          $scope.loading.hide();
       });
 
       }, locationGetOnError, 
-      { maximumAge: 3000, timeout: 50000, enableHighAccuracy: false });
+      { maximumAge: 3000, timeout: 50000, enableHighAccuracy: false }
+    );
   }
+  
 
   $ionicPlatform.ready(function(){
     $scope.loading = $ionicLoading.show({
@@ -124,11 +192,18 @@ angular.module('flyr', ['ionic'])
     });
     $scope.currentLocation = "Getting Current Location";
     getLoc();
-    //$interval(getLoc, 10000);
+
+    /* TODO:
+    once every 10 seconds.
+    Does call even when the app is not running.
+    Make it call more when the app is not running and less when the app is using device events
+    Check the distance before calling the server/ Poll server for new promotions by just sending latest promo id.
+    */
+    //$interval(getLoc, 10000); 
   });
 })
 
-.controller('MainCtrl', function($scope, $timeout) {
+.controller('MainCtrl', function($scope, $timeout, $ionicModal) {
   // Our controller
 
   $scope.toggleLeft = function(){
@@ -154,7 +229,7 @@ angular.module('flyr', ['ionic'])
   $scope.doRefresh = function() {
     alert('lat:' + latitude + ',long:' + longitude);
     $timeout( function() {
-  	 $scope.items.push({name:"new1"}); // Refresher problematic in ionic beta version. Use old version?
+  	 $scope.items.push({name:"new1"}); 
     });
     $scope.$broadcast('scroll.refreshComplete');
   };
@@ -175,4 +250,23 @@ angular.module('flyr', ['ionic'])
     }
   }
   ];
+
+  $scope.rightButtonsMain = [{
+    content: 'Settings',
+    type: 'button-positive button-clear',
+    tap: function(e) {
+      $scope.modal.show();
+    }
+  }];
+
+  $ionicModal.fromTemplateUrl('modal.html', function(modal) {
+    $scope.modal = modal;
+  }, {
+    animation: 'slide-in-up',
+    focusFirstInput: true
+  });
 })
+
+.controller('ModalCtrl', function($scope) {
+
+});
