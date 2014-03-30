@@ -50,9 +50,6 @@ angular.module('flyr', ['ionic'])
     playstore: 'https://play.google.com/store/apps/details?id=oldcask.ocr.android.activities&feature=search_result',
     appstore: '',
   }
-  function call() {
-    document.location.href = 'tel:+1' + $scope.flyer['phonenumber'];
-  }
 
   function getFlyer() {
     //alert("Getting Flyer" + i);
@@ -193,9 +190,5 @@ angular.module('flyr', ['ionic'])
 })
 
 .controller('ModalCtrl', function($scope) {
-  $scope.createContact = function() {
-    console.log('Create Contact', $scope.newUser);
-    $scope.modal.hide();
-  };
   
 });
