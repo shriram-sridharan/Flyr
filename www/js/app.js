@@ -43,6 +43,33 @@ flyrapp
     //delete $httpProvider.defaults.headers.common['X-Requested-With'];
   })
 
-.controller('ModalCtrl', function($scope) {
+.controller('ModalCtrl', function($scope, $ionicPlatform) {
+  $ionicPlatform.ready(function(){
+    console.log("called");
+    $scope.settingsList = [
+      { text: "Information", checked: false },
+      { text: "Student Promotions", checked: false },
+      { text: "General Promotions", checked: false }
+    ];
 
+    console.log(localStorage.getItem('flyr-infosettings'));
+    console.log(localStorage.getItem('flyr-studentpromosettings'));
+    console.log(localStorage.getItem('flyr-generalpromosettings'));
+
+    if(localStorage.getItem('flyr-infosettings') != null)
+      $scope.settingsList[0].checked = localStorage.getItem('flyr-infosettings') === 'true'; // JS Quirks
+    if(localStorage.getItem('flyr-studentpromosettings') != null)
+      $scope.settingsList[1].checked = localStorage.getItem('flyr-studentpromosettings') === 'true';
+    if(localStorage.getItem('flyr-generalpromosettings') != null)
+      $scope.settingsList[2].checked = localStorage.getItem('flyr-generalpromosettings') === 'true';
+  });
+
+  $scope.closeModal = function() {
+    localStorage.setItem('flyr-infosettings', $scope.settingsList[0].checked);
+    localStorage.setItem('flyr-studentpromosettings', $scope.settingsList[1].checked);
+    localStorage.setItem('flyr-generalpromosettings', $scope.settingsList[2].checked);
+    //TODO: Allow push notifications
+    // localStorage.setItem('flyr-pushnotificationsettings', $scope.pushnotificationsettings);
+    $scope.modal.hide();
+  };
 });

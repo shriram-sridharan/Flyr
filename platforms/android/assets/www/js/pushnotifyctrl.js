@@ -64,17 +64,15 @@ flyrapp
     }
 
     function showPopUp(){
-    if(localStorage.getItem('flyr-pushnotificationsettings') == null) {
+    if(localStorage.getItem('flyr-regid') == null) {
         $ionicPopup.confirm({
           title: 'Allow Push Notifications',
           content: 'Do you want to allow push notifications?'
           }).then(function(res) {
           if(res) {
-            localStorage.setItem('flyr-pushnotificationsettings', 'true');
             registerPushNotification();
           } else {
             console.log('Dont push');
-            localStorage.setItem('flyr-pushnotificationsettings', 'false');
           }
         });
       }

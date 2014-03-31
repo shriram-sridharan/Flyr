@@ -8,31 +8,6 @@ function showPlayStore(url) {
   window.open(url);
 }
 
-function onNotificationGCM(e) {
-  switch( e.event )
-  {
-    case 'registered':
-    if ( e.regid.length > 0 )
-    {
-      localStorage.setItem('regid', e.regid); // Storing it in local storage
-    }
-    break;
-
-    case 'message':
-    // doRefresh depending on status of device
-    alert('message = '+e.payload.message+' msgcnt = '+e.payload.msgcnt);
-    break;
-
-    case 'error':
-    alert('GCM error = '+e.msg);
-    break;
-
-    default:
-    alert('An unknown GCM event has occurred');
-    break;
-  }
-}
-
 var flyrapp = angular.module('flyr', ['ionic']);
 
 flyrapp
@@ -41,52 +16,6 @@ flyrapp
 		if(window.StatusBar) {
 			StatusBar.styleDefault();
 		}
-    /*
-    Push Notification Registration.
-    TODO: Do not show push notification pop up again even if the app is killed.
-    Needs Login in the device and associate with user model
-    */
-
-    function successHandler(result) {
-      pushnotifyloading.hide();
-    }
-
-    function errorHandler (error) {
-      alert('Error Setting Push Notifications : ' + error);
-      pushnotifyloading.hide();
-    }
-
-    function registerPushNotification() {
-      pushnotifyloading = $ionicLoading.show({
-        content: 'Registering device for Push Notifications...',
-        showBackdrop: false
-      });
-
-      var pushNotification = window.plugins.pushNotification;
-      if (device.platform == 'android' || device.platform == 'Android' )
-      {
-        pushNotification.register(successHandler, errorHandler, 
-          {"senderID":"44227676919","ecb":"onNotificationGCM"});
-      }
-      else {
-        alert("Error. Cannot set Push Notifications.");
-        pushnotifyloading.hide();
-      }
-    }
-
-    if(localStorage.getItem('regid') == null) {
-      $ionicPopup.confirm({
-        title: 'Allow Push Notifications',
-        content: 'Do you want to allow push notifications?'
-        }).then(function(res) {
-        if(res) {
-          registerPushNotification();
-        } else {
-          console.log('Dont push');
-        }
-      });
-      showPushNotificationDialog = false;
-    }
 	});
 })
 
@@ -114,6 +43,31 @@ flyrapp
     //delete $httpProvider.defaults.headers.common['X-Requested-With'];
   })
 
-.controller('ModalCtrl', function($scope) {
+.controller('ModalCtrl', function($scope, $ionicPlatform) {
+  $ionicPlatform.ready(function(){
+    console.log("called");
+    $scope.settingsList = [
+      { text: "Information", checked: false },
+      { text: "Student Promotions", checked: false },
+      { text: "General Promotions", checked: false }
+    ];
 
+    console.log(localStorage.getItem('flyr-infosettings'));
+    console.log(localStorage.getItem('flyr-studentpromosettings'));
+    console.log(localStorage.getItem('flyr-generalpromosettings'));
+
+    if(localStorage.getItem('flyr-infosettings') != null)
+      $scope.settingsList[0].checked = localStorage.getItem('flyr-infosettings') === 'true'; // JS Quirks
+    if(localStorage.getItem('flyr-studentpromosettings') != null)
+      $scope.settingsList[1].checked = localStorage.getItem('flyr-studentpromosettings') === 'true';
+    if(localStorage.getItem('flyr-generalpromosettings') != null)
+      $scope.settingsList[2].checked = localStorage.getItem('flyr-generalpromosettings') === 'true';
+  });
+
+  $scope.closeModal = function() {
+    localStorage.setItem('flyr-infosettings', $scope.settingsList[0].checked);
+    localStorage.setItem('flyr-studentpromosettings', $scope.settingsList[1].checked);
+    localStorage.setItem('flyr-generalpromosettings', $scope.settingsList[2].checked);
+    $scope.modal.hide();
+  };
 });

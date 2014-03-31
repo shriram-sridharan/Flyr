@@ -5,6 +5,7 @@ flyrapp
   $ionicPlatform.ready(function(){
       $scope.items = scopeItems;
       $scope.getLocAndFlyers();
+      //localStorage.setItem('flyr-regid','xyz');
   });
 
   $scope.toggleLeft = function(){
@@ -46,8 +47,6 @@ flyrapp
 
           /* TODO:
           Is this place correct?
-          once every 10 seconds -> Make it more time
-          Does call even when the app is not running.
           Make it call more when the app is not running and less when the app is using device events
           Check the distance before calling the server/ Poll server for new promotions by just sending 
           latest promo id.
@@ -55,9 +54,8 @@ flyrapp
           can use $scope.stopPolling to cancel -> Read Angular JS
           */
 
-          alert(localStorage.getItem('regid'));
-          if(localStorage.getItem('regid') != null && $scope.stopPolling == undefined)
-            $scope.stopPolling = $interval($scope.pollFlyers, 10000);  
+          if(localStorage.getItem('flyr-regid') != null && $scope.stopPolling == undefined)
+            $scope.stopPolling = $interval($scope.pollFlyers, 10000);  //Time??
         })
 
         .error(function(data, status) {
@@ -80,7 +78,10 @@ flyrapp
         $http.post('http://ec2-54-201-190-159.us-west-2.compute.amazonaws.com:8000/poll-flyers',
           {'lat':''+latitude,
           'lng':''+longitude, 
-          'regid':''+localStorage.getItem('regid')
+          'regid':''+localStorage.getItem('flyr-regid'),
+          'infosettings': ''+localStorage.getItem('flyr-infosettings'),
+          'spsettings': ''+localStorage.getItem('flyr-studentpromosettings'),
+          'gpsettings': ''+localStorage.getItem('flyr-generalpromosettings')
           })
         .success(function(data, status, headers, config) {
         //$scope.currentLocation = data[0].loc;
@@ -102,7 +103,12 @@ flyrapp
 
     $timeout( function() {
       $http.post('http://ec2-54-201-190-159.us-west-2.compute.amazonaws.com:8000/get-flyers',
-        {'lat':''+latitude,'lng':''+longitude})
+        {'lat':''+latitude,
+        'lng':''+longitude,
+        'infosettings': ''+localStorage.getItem('flyr-infosettings'),
+        'spsettings': ''+localStorage.getItem('flyr-studentpromosettings'),
+        'gpsettings': ''+localStorage.getItem('flyr-generalpromosettings')
+        })
       .success(function(data, status, headers, config) {
         //$scope.currentLocation = data[0].loc;
         $scope.items = data;

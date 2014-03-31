@@ -1,11 +1,16 @@
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/HelloCordova.ap_ \
  : /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/xml/config.xml \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/drawable-xhdpi/icon.png \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/drawable-xhdpi/ficon.jpeg \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/values/strings.xml \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/drawable/icon.png \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/drawable/ficon.jpeg \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/drawable-hdpi/icon.png \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/drawable-hdpi/ficon.jpeg \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/drawable-ldpi/icon.png \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/drawable-ldpi/ficon.jpeg \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/drawable-mdpi/icon.png \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/drawable-mdpi/ficon.jpeg \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/res/drawable-xhdpi/icon.png \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/res/drawable/icon.png \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/res/drawable-hdpi/icon.png \
@@ -23,6 +28,7 @@
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/lib \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/plugins \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/img/ionic.png \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/js/pushnotifyctrl.js \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/js/infoctrl.js \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/js/app.js \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/js/PushNotification.js \

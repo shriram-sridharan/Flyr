@@ -16,7 +16,6 @@ flyrapp
   function lookupFlyer() {
 
     $scope.flyer = {};
-    alert($stateParams.flyerid);
     $http.post('http://ec2-54-201-190-159.us-west-2.compute.amazonaws.com:8000/lookup-flyer',
         {'id':''+$stateParams.flyerid})
       .success(function(data, status, headers, config) {
