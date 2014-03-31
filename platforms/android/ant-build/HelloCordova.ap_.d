@@ -23,8 +23,10 @@
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/lib \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/plugins \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/img/ionic.png \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/js/infoctrl.js \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/js/app.js \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/js/PushNotification.js \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/js/mainctrl.js \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/lib/angular-ui-router \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/lib/angular-sanitize \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/lib/angular \

@@ -1,27 +1,30 @@
 <!DOCTYPE html>
-<html ng-app="flyr" ng-controller="GeoLocationCtrl">
+<html ng-app="flyr" ng-controller="MainCtrl">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
 
-    <link href="http://code.ionicframework.com/1.0.0-beta.1/css/ionic.min.css" rel="stylesheet">
+    <!--http://code.ionicframework.com/1.0.0-beta.1/css/ionic.min.css-->
+    <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
     
         <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
         <link href="css/ionic.app.css" rel="stylesheet">
     -->
 
     <!-- ionic/angularjs js -->
-    <script src="http://code.ionicframework.com/1.0.0-beta.1/js/ionic.bundle.js"></script>
-    <script src="http://code.ionicframework.com/1.0.0-beta.1/js/angular-ui/angular-ui-router.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
+    <script src="js/mainctrl.js"></script>
+    <script src="js/infoctrl.js"></script>
     <script src="js/PushNotification.js"></script>
 </head>
-<body ng-controller="MainCtrl">
+<body>
     <ion-nav-bar class="nav-title-slide-ios7 bar-positive" animation="nav-title-slide-ios7">
           <ion-nav-back-button class="button-icon ion-arrow-left-c">
           </ion-nav-back-button>
@@ -31,7 +34,7 @@
   <!-- where the initial view template will be rendered -->
   <ion-nav-view animation="slide-left-right"></ion-nav-view>
 </body>
-<script id="home.html" type="text/ng-template" ng-controller="MainCtrl" >
+<script id="home.html" type="text/ng-template">
 <ion-view title="Flyr">
      <ion-nav-buttons side="right">
         <a class="button button-icon icon ion-gear-b" ng-click="modal.show()">        
@@ -49,10 +52,10 @@
               <i class="icon ion-ios7-search placeholder-icon"></i>
               <input type="text" placeholder="Search" class="search-query" ng-model="searchItem">
             </label>
-            <ion-item class="item-avatar" ng-repeat="item in items | filter:searchItem | orderBy: 'date'" item="item" can-swipe="true" href="#/{{item.type}}/{{item.id}}">
-                <img src="{{item.type}}.jpg"></img> <div style="float:right"> {{item.date}} </div> 
-                <h2> {{item.name}} </h2> 
-                <p> {{item.summary}}</p>
+            <ion-item class="item-avatar" ng-repeat="item in items | filter:searchItem" item="item" can-swipe="true" href="#/infoflyer/{{item.id}}">
+                <!--<img src="{{item.type}}"></img> <div style="float:right"> Today </div> -->
+                <h2> {{item.publisher}} </h2> 
+                <p> {{item.title}}</p>
             </ion-item>
         </ion-list>
       </ion-content>
@@ -65,12 +68,12 @@
         <!-- Center content -->
         <div class="list card">
           <div class="item item-text-wrap">
-            <h2>{{flyer.name}}</h2>
-            <p>{{flyer.summary}}</p>
+            <h2>{{flyer.publisher}}</h2>
+            <p>{{flyer.title}}</p>
           </div>
           <div class="item item-body">
-            <img class="full-image" src={{flyer.img}}></img>
-            <p>{{flyer.content}}</p>
+            <img class="full-image" src={{flyer.imgurl}}></img>
+            <p>{{flyer.contents}}</p>
           </div>
             <div class="item tabs tabs-secondary tabs-icon-left" id="tabs"></div>
         </div>
