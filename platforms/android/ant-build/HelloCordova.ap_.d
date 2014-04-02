@@ -20,6 +20,7 @@
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/_where-is-www.txt \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/config.xml \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/cordova.js \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/flyerdisplay.html \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/img \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/js \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/assets/www/cordova_plugins.js \

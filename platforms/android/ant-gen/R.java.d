@@ -12,6 +12,7 @@
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/drawable-mdpi/icon.png \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/res/drawable-mdpi/ficon.jpeg \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/res/drawable-xhdpi/icon.png \
+/home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/res/drawable/icon.png \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/res/drawable-hdpi/icon.png \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/res/drawable-ldpi/icon.png \
 /home/shriram/Desktop/NEST/ionic-flyr/platforms/android/ant-build/res/drawable-mdpi/icon.png \

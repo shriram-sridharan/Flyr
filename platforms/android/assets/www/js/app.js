@@ -11,32 +11,82 @@ function showPlayStore(url) {
 var flyrapp = angular.module('flyr', ['ionic']);
 
 flyrapp
-.run(function($ionicPlatform, $ionicLoading, $ionicPopup) {
+.run(function($rootScope, $state, $ionicPlatform, $ionicLoading, $ionicPopup, $ionicSideMenuDelegate) {
 	$ionicPlatform.ready(function() {
 		if(window.StatusBar) {
 			StatusBar.styleDefault();
-		}
+		};
+
+    $rootScope.togglemenu = function() {
+      $ionicSideMenuDelegate.toggleLeft();
+    };
+
+    $rootScope.go = function(path) {
+     console.log('go',path);
+      $state.go(path);
+    };
 	});
 })
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   $stateProvider
-  .state('home', {
+  .state('filtermenu', {
+      url: "/filter",
+      abstract: true,
+      templateUrl: "filter-menu.html"
+  })
+  .state('filtermenu.home', {
     url: "/home",
-    templateUrl: "home.html"
+    views: {
+      'menuContent' :{
+       templateUrl: "home.html"
+      }
+    }
   })
-  .state('infoflyer', {
+  .state('filtermenu.information', {
+    url: "/information",
+    views: {
+      'menuContent' :{
+       templateUrl: "information.html"
+      }
+    }
+  })
+  .state('filtermenu.studentsale', {
+    url: "/studentsale",
+    views: {
+      'menuContent' :{
+       templateUrl: "studentsale.html"
+      }
+    }
+  })
+  .state('filtermenu.studentpromotion', {
+    url: "/studentpromotion",
+    views: {
+      'menuContent' :{
+       templateUrl: "studentpromotion.html"
+      }
+    }
+  })
+  .state('filtermenu.generalpromotion', {
+    url: "/generalpromotion",
+    views: {
+      'menuContent' :{
+       templateUrl: "generalpromotion.html"
+      }
+    }
+  })
+  .state('filtermenu.infoflyer', {
     url: "/infoflyer/:flyerid",
-    templateUrl: "infoflyer.html"
-  })
-  .state('promoflyer', {
-    url: "/promoflyer/:flyerid",
-    templateUrl: "infoflyer.html"
+    views: {
+      'menuContent' :{
+       templateUrl: "infoflyer.html"
+     }
+    }
   })
 
     // if none of the above are matched, go to this one
-    $urlRouterProvider.otherwise("/home");
+    $urlRouterProvider.otherwise("/filter/home");
 
     $httpProvider.defaults.useXDomain = true;
     //$httpProvider.defaults.headers.common = 'Content-Type: application/json';
@@ -45,7 +95,6 @@ flyrapp
 
 .controller('ModalCtrl', function($scope, $ionicPlatform) {
   $ionicPlatform.ready(function(){
-    console.log("called");
     $scope.settingsList = [
       { text: "Information", checked: false },
       { text: "Student Promotions", checked: false },
@@ -68,6 +117,8 @@ flyrapp
     localStorage.setItem('flyr-infosettings', $scope.settingsList[0].checked);
     localStorage.setItem('flyr-studentpromosettings', $scope.settingsList[1].checked);
     localStorage.setItem('flyr-generalpromosettings', $scope.settingsList[2].checked);
+    //TODO: Allow push notifications
+    // localStorage.setItem('flyr-pushnotificationsettings', $scope.pushnotificationsettings);
     $scope.modal.hide();
   };
 });

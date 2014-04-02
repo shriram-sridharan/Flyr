@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="flyr" ng-controller="MainCtrl">
+<html ng-app="flyr" id="mainhtml" ng-controller="MainCtrl">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -26,19 +26,57 @@
     <script src="js/PushNotification.js"></script>
 </head>
 <body ng-controller="PushNotifyCtrl">
-    <ion-nav-bar class="nav-title-slide-ios7 bar-positive" animation="nav-title-slide-ios7">
-          <ion-nav-back-button class="button-icon ion-arrow-left-c">
-          </ion-nav-back-button>
-
-    </ion-nav-bar>
-
   <!-- where the initial view template will be rendered -->
   <ion-nav-view animation="slide-left-right"></ion-nav-view>
 </body>
+<script id="filter-menu.html" type="text/ng-template">
+  <ion-side-menus>
+    
+    <ion-pane ion-side-menu-content>
+      <ion-nav-bar class ="bar-positive"
+               animation="nav-title-slide-ios7">
+        <ion-nav-back-button class="button-icon ion-ios7-arrow-back">
+         Back </ion-nav-back-button>
+      </ion-nav-bar>
+      <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-pane> 
+    
+    <ion-side-menu side="left" width="600" ng-click="togglemenu()" has-header="true">
+        <ion-pane>
+        <ion-header-bar class="bar bar-header bar-assertive">
+          <h1 class="title">Flyr Options</h1>
+        </ion-header-bar>
+        <ion-content has-header="true">
+        <div class="list">
+          <div class="item item-divider">
+            Filters
+          </div>
+          <a class="item item-icon-left" ng-click="go('filtermenu.home')">
+          <i class="icon ion-ios7-infinite"></i> All </a>
+          <a class="item item-icon-left" ng-click="go('filtermenu.information')">
+          <i class="icon ion-ios7-information-outline"></i> Information </a>
+          <a class="item item-icon-left" ng-click="go('filtermenu.studentpromotion')">
+          <i class="icon ion-ios7-pricetag"></i> Student Promotion </a>
+          <a class="item item-icon-left" ng-click="go('filtermenu.studentsale')">
+          <i class="icon ion-ios7-cart"></i> Student Sale </a>
+          <a class="item item-icon-left" ng-click="go('filtermenu.generalpromotion')">
+          <i class="icon ion-android-promotion"></i> General Promotion</a>
+
+        </div>
+        </ion-content>
+        </ion-pane>
+    </ion-side-menu>
+    
+  </ion-side-menus>
+</script>
 <script id="home.html" type="text/ng-template">
-<ion-view title="Flyr">
+<ion-view title="Flyr" hide-back-button="true">
      <ion-nav-buttons side="right">
         <a class="button button-icon icon ion-gear-b" ng-click="modal.show()">        
+        </a>
+     </ion-nav-buttons>
+     <ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-navicon" ng-click="togglemenu()">        
         </a>
      </ion-nav-buttons>
      <ion-content has-header="true">
@@ -53,8 +91,8 @@
               <i class="icon ion-ios7-search placeholder-icon"></i>
               <input type="text" placeholder="Search" class="search-query" ng-model="searchItem">
             </label>
-            <ion-item class="item-avatar" ng-repeat="item in items | filter:searchItem" item="item" can-swipe="true" href="#/infoflyer/{{item.id}}">
-                <!--<img src="{{item.type}}"></img> <div style="float:right"> Today </div> -->
+            <ion-item class="item-avatar" ng-repeat="item in items | filter:searchItem" item="item" can-swipe="true" href="#/filter/infoflyer/{{item.id}}">
+                <!--<img src="{{item.img}}"></img> <div style="float:right"> Today </div> -->
                 <h2> {{item.publisher}} </h2> 
                 <p> {{item.title}}</p>
             </ion-item>
@@ -63,7 +101,7 @@
   </ion-view>
 </script>
 <script id="infoflyer.html" type="text/ng-template">
-<ion-view title="Information Flyer">
+<ion-view title="Information Flyer" hide-back-button="false">
   <div ng-controller="InfoFlyerCtrl">
      <ion-content has-header="true">
         <!-- Center content -->
@@ -91,18 +129,141 @@
     <ion-content>
       <div class="padding">
         <div class="list">
-          <div class="item item-divider">
-          Notifications
-          </div>
-          <ion-toggle ng-repeat="item in settingsList"
-                    ng-model="item.checked" 
-                    ng-checked="item.checked">
-          {{ item.text }}
-        </ion-toggle>
+              <div class="item item-divider">
+              Push Notification Settings
+              </div>
+              <ion-toggle ng-repeat="item in settingsList"
+                        ng-model="item.checked" 
+                        ng-checked="item.checked">
+              {{ item.text }}
+            </ion-toggle>
         </div>
       </div>
     </ion-content>
   </div>
 </script>
-
 </html>
+<script id="information.html" type="text/ng-template">
+<ion-view title="Flyr" hide-back-button="true">
+     <ion-nav-buttons side="right">
+        <a class="button button-icon icon ion-gear-b" ng-click="modal.show()">        
+        </a>
+     </ion-nav-buttons>
+     <ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-navicon" ng-click="togglemenu()">        
+        </a>
+     </ion-nav-buttons>
+     <ion-content has-header="true">
+        
+        <!-- Center content -->
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()" ></ion-refresher>
+        <ion-list option-buttons="itemButtons">
+            <ion-item can-swipe="false"> 
+            <center><b class="positive icon ion-location"> {{currentLocation}} </b> </center>
+            </ion-item>
+            <label class="item item-input">
+              <i class="icon ion-ios7-search placeholder-icon"></i>
+              <input type="text" placeholder="Search" class="search-query" ng-model="searchItem">
+            </label>
+            <ion-item class="item-avatar" ng-repeat="item in informationItems | filter:searchItem" item="item" can-swipe="true" href="#/filter/infoflyer/{{item.id}}">
+                <!--<img src="{{item.img}}"></img> <div style="float:right"> Today </div> -->
+                <h2> {{item.publisher}} </h2> 
+                <p> {{item.title}}</p>
+            </ion-item>
+        </ion-list>
+      </ion-content>
+  </ion-view>
+</script>
+<script id="studentsale.html" type="text/ng-template">
+<ion-view title="Flyr" hide-back-button="true">
+     <ion-nav-buttons side="right">
+        <a class="button button-icon icon ion-gear-b" ng-click="modal.show()">        
+        </a>
+     </ion-nav-buttons>
+     <ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-navicon" ng-click="togglemenu()">        
+        </a>
+     </ion-nav-buttons>
+     <ion-content has-header="true">
+        
+        <!-- Center content -->
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()" ></ion-refresher>
+        <ion-list option-buttons="itemButtons">
+            <ion-item can-swipe="false"> 
+            <center><b class="positive icon ion-location"> {{currentLocation}} </b> </center>
+            </ion-item>
+            <label class="item item-input">
+              <i class="icon ion-ios7-search placeholder-icon"></i>
+              <input type="text" placeholder="Search" class="search-query" ng-model="searchItem">
+            </label>
+            <ion-item class="item-avatar" ng-repeat="item in studentsaleItems | filter:searchItem" item="item" can-swipe="true" href="#/filter/infoflyer/{{item.id}}">
+                <!--<img src="{{item.img}}"></img> <div style="float:right"> Today </div> -->
+                <h2> {{item.publisher}} </h2> 
+                <p> {{item.title}}</p>
+            </ion-item>
+        </ion-list>
+      </ion-content>
+  </ion-view>
+</script>
+<script id="studentpromotion.html" type="text/ng-template">
+<ion-view title="Flyr" hide-back-button="true">
+     <ion-nav-buttons side="right">
+        <a class="button button-icon icon ion-gear-b" ng-click="modal.show()">        
+        </a>
+     </ion-nav-buttons>
+     <ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-navicon" ng-click="togglemenu()">        
+        </a>
+     </ion-nav-buttons>
+     <ion-content has-header="true">
+        
+        <!-- Center content -->
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()" ></ion-refresher>
+        <ion-list option-buttons="itemButtons">
+            <ion-item can-swipe="false"> 
+            <center><b class="positive icon ion-location"> {{currentLocation}} </b> </center>
+            </ion-item>
+            <label class="item item-input">
+              <i class="icon ion-ios7-search placeholder-icon"></i>
+              <input type="text" placeholder="Search" class="search-query" ng-model="searchItem">
+            </label>
+            <ion-item class="item-avatar" ng-repeat="item in studentpromotionItems | filter:searchItem" item="item" can-swipe="true" href="#/filter/infoflyer/{{item.id}}">
+                <!--<img src="{{item.img}}"></img> <div style="float:right"> Today </div> -->
+                <h2> {{item.publisher}} </h2> 
+                <p> {{item.title}}</p>
+            </ion-item>
+        </ion-list>
+      </ion-content>
+  </ion-view>
+</script>
+<script id="generalpromotion.html" type="text/ng-template">
+<ion-view title="Flyr" hide-back-button="true">
+     <ion-nav-buttons side="right">
+        <a class="button button-icon icon ion-gear-b" ng-click="modal.show()">        
+        </a>
+     </ion-nav-buttons>
+     <ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-navicon" ng-click="togglemenu()">        
+        </a>
+     </ion-nav-buttons>
+     <ion-content has-header="true">
+        
+        <!-- Center content -->
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()" ></ion-refresher>
+        <ion-list option-buttons="itemButtons">
+            <ion-item can-swipe="false"> 
+            <center><b class="positive icon ion-location"> {{currentLocation}} </b> </center>
+            </ion-item>
+            <label class="item item-input">
+              <i class="icon ion-ios7-search placeholder-icon"></i>
+              <input type="text" placeholder="Search" class="search-query" ng-model="searchItem">
+            </label>
+            <ion-item class="item-avatar" ng-repeat="item in generalpromotionItems | filter:searchItem" item="item" can-swipe="true" href="#/filter/infoflyer/{{item.id}}">
+                <!--<img src="{{item.img}}"></img> <div style="float:right"> Today </div> -->
+                <h2> {{item.publisher}} </h2> 
+                <p> {{item.title}}</p>
+            </ion-item>
+        </ion-list>
+      </ion-content>
+  </ion-view>
+</script>
