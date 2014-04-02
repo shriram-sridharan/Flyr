@@ -77,10 +77,26 @@ flyrapp
     }
   })
   .state('filtermenu.infoflyer', {
-    url: "/infoflyer/:flyerid",
+    url: "/GENINFO/:flyerid",
     views: {
       'menuContent' :{
        templateUrl: "infoflyer.html"
+     }
+    }
+  })
+  .state('filtermenu.stpromoflyer', {
+    url: "/STPROMO/:flyerid",
+    views: {
+      'menuContent' :{
+       templateUrl: "infoflyer.html"
+     }
+    }
+  })
+  .state('filtermenu.stsaleflyer', {
+    url: "/STUSALE/:flyerid",
+    views: {
+      'menuContent' :{
+       templateUrl: "stusale.html"
      }
     }
   })

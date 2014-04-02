@@ -25,55 +25,36 @@ flyrapp
   }
 
   $scope.getLocAndFlyers = function() {
-    $scope.loading = $ionicLoading.show({
-      content: 'Getting current location...',
-      showBackdrop: false
-    });
-    $scope.currentLocation = "Getting Current Location";
 
     navigator.geolocation.getCurrentPosition(function(position) 
       {
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
 
-        $http.post('http://ec2-54-201-190-159.us-west-2.compute.amazonaws.com:8000/get-current-location',
-        {'lat':''+latitude,'lng':''+longitude})
-        .success(function(data, status, headers, config) {
-          $scope.currentLocation = data[0].loc;
-          console.log(data);
-          $scope.loading.hide();
+        /*
+        TODO: Get Flyers only if location changes.
+        If app is running in background, then don't get flyers, just get count for pushNotifications.
+        */
+        $scope.getFlyers();
 
-          /*
-          TODO: Get Flyers only if location changes.
-          If app is running in background, then don't get flyers, just get count for pushNotifications.
-          */
-          $scope.getFlyers();
+        /* TODO:
+        Is this place correct?
+        Make it call more when the app is not running and less when the app is using device events
+        Check the distance before calling the server/ Poll server for new promotions by just sending 
+        latest promo id.
+        can use $scope.stopPolling to cancel -> Read Angular JS
+        */
 
-          /* TODO:
-          Is this place correct?
-          Make it call more when the app is not running and less when the app is using device events
-          Check the distance before calling the server/ Poll server for new promotions by just sending 
-          latest promo id.
-          can use $scope.stopPolling to cancel -> Read Angular JS
-          */
+        /*
+        stopPolling will become undefined when the app is killed.  
+        TODO: Hacked->Will refresh everytime. So more intervals will keep adding.
+        Change before launch. Try singleTop android launch mode.
+        Also if back button is pressed, this goes away!
+        */
+        if(stopPolling == undefined) { 
+            stopPolling = $interval($scope.pollFlyers, 10000); // called?
+        }
 
-          /*
-          stopPolling will become undefined when the app is killed.  
-          TODO: Hacked->Will refresh everytime. So more intervals will keep adding.
-          Change before launch. Try singleTop android launch mode.
-          Also if back button is pressed, this goes away!
-          */
-            if(stopPolling == undefined) { 
-                stopPolling = $interval($scope.pollFlyers, 10000); // called?
-            }
-          }
-        )
-
-        .error(function(data, status) {
-        //TODO: Change to pop up
-          alert("Error Getting Location. Check if Internet and GPS are turned on (or) try again later");
-          $scope.loading.hide();
-        });
       }, $scope.locationGetOnError, 
       { maximumAge: 3000, timeout: 50000, enableHighAccuracy: false }
     );
@@ -140,7 +121,7 @@ flyrapp
 
   $scope.getFlyers = function() {
     $scope.refreshloading = $ionicLoading.show({
-      content: 'Refreshing Flyer List...',
+      content: 'Getting current Location and Refreshing Flyer List...',
       showBackdrop: false
     });
 
@@ -153,9 +134,10 @@ flyrapp
         'gpsettings': ''+localStorage.getItem('flyr-generalpromosettings')
         })
       .success(function(data, status, headers, config) {
-        //$scope.currentLocation = data[0].loc;
-        $scope.items = data;
-        scopeItems = data;
+        console.log(data);
+        $scope.currentLocation = data[0].hotspot.name;
+        $scope.items = data[0].flyers;
+        scopeItems = data[0].flyers;
 
         $scope.informationItems = [];
         $scope.studentsaleItems = [];
@@ -165,15 +147,20 @@ flyrapp
         for(i=0;i<$scope.items.length;i++) {
           var item = $scope.items[i];
           console.log(item);
+          console.log("id = " + item["flyer-id"]);
           console.log("type=" + item.type);
-          if("information" == item.type) {
+          if("GENINFO" == item.type) {
             $scope.informationItems.push(item);
+            $scope.items[i]['avatarpic']="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6r0rh1rQFXjm0nP8MQ8BZBl3W-XVSvJN_sTSVO4lFFEikkT701Q";
           }
-          else if("studentsale" == item.type){
+          else if("STUSALE" == item.type){
             $scope.studentsaleItems.push(item);
+            $scope.items[i]['avatarpic']="http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-11/512/sale-icon.png";
+            $scope.items[i]['name'] = $scope.items[i]['title'];
           }
-          else if("studentpromotion" == item.type) {
+          else if("STPROMO" == item.type) {
             $scope.studentpromotionItems.push(item);
+            $scope.items[i]['avatarpic']="http://www.clker.com/cliparts/h/z/l/u/l/s/speaker-volume-3-hi.png";
           }
           else if("generalpromotion" == item.type){
             $scope.generalpromotionItems.push(item);

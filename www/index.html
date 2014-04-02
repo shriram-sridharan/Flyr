@@ -91,35 +91,67 @@
               <i class="icon ion-ios7-search placeholder-icon"></i>
               <input type="text" placeholder="Search" class="search-query" ng-model="searchItem">
             </label>
-            <ion-item class="item-avatar" ng-repeat="item in items | filter:searchItem" item="item" can-swipe="true" href="#/filter/infoflyer/{{item.id}}">
-                <!--<img src="{{item.img}}"></img> <div style="float:right"> Today </div> -->
+            <ion-item class="item-avatar" ng-repeat="item in items | filter:searchItem" item="item" can-swipe="true" href="#/filter/{{item.type}}/{{item['flyer-id']}}">
+                <img src="{{item.avatarpic}}"></img> <div style="float:right"> {{item.date}} </div> 
                 <h2> {{item.publisher}} </h2> 
-                <p> {{item.title}}</p>
+                <p> {{item.name}}</p>
             </ion-item>
         </ion-list>
       </ion-content>
   </ion-view>
 </script>
+
+
+
 <script id="infoflyer.html" type="text/ng-template">
 <ion-view title="Information Flyer" hide-back-button="false">
   <div ng-controller="InfoFlyerCtrl">
      <ion-content has-header="true">
         <!-- Center content -->
         <div class="list card">
-          <div class="item item-text-wrap">
-            <h2>{{flyer.publisher}}</h2>
-            <p>{{flyer.title}}</p>
+          <div class="item item-avatar">
+            <img src={{flyer.logo}}></img>
+            <h2>{{flyer.location}}</h2>
+            <p style="float:right">{{flyer.date}}</p>
+            <p>{{flyer.name}}</p>
           </div>
           <div class="item item-body">
-            <img class="full-image" src={{flyer.imgurl}}></img>
-            <p>{{flyer.contents}}</p>
+            <img class="full-image" src={{flyer.image}}></img>
+            <p>{{flyer.description}}</p>
           </div>
-            <div class="item tabs tabs-secondary tabs-icon-left" id="tabs"></div>
+            <div class="item tabs tabs-secondary tabs-icon-left" id="tabs">Contact:</div>
         </div>
         </ion-content>
   </div>
   </ion-view>
 </script>
+<script id="stusale.html" type="text/ng-template">
+<ion-view title="Information Flyer" hide-back-button="false">
+  <div ng-controller="InfoFlyerCtrl">
+     <ion-content has-header="true">
+        <!-- Center content -->
+        <div class="list card">
+          <div class="item">
+            <h2>{{flyer.location}}</h2>
+            <p style="float:right">{{flyer.date}}</p>
+            <p>{{flyer.title}}</p>
+           </div>
+           <div class="item">
+            <p>{{flyer.description}}</p>
+            </div>
+          <ion-item class="item-thumbnail-left" ng-repeat="item in flyer.items" item="item" can-swipe="false">
+              <img src="{{item.image}}"></img>  
+              <h2> Cost : ${{item.cost}} </h2> 
+              <p> Description: {{item.description}}</p>
+          </ion-item>
+          <div class="item tabs tabs-secondary tabs-icon-left" id="tabs">Claims: </div>
+        </div>
+        </ion-content>
+  </div>
+  </ion-view>
+</script>
+
+
 <script id="modal.html" type="text/ng-template">
   <div class="modal" ng-controller="ModalCtrl">
     <ion-header-bar class="bar bar-header bar-positive">
@@ -143,6 +175,9 @@
   </div>
 </script>
 </html>
+
+
+
 <script id="information.html" type="text/ng-template">
 <ion-view title="Flyr" hide-back-button="true">
      <ion-nav-buttons side="right">
@@ -165,10 +200,10 @@
               <i class="icon ion-ios7-search placeholder-icon"></i>
               <input type="text" placeholder="Search" class="search-query" ng-model="searchItem">
             </label>
-            <ion-item class="item-avatar" ng-repeat="item in informationItems | filter:searchItem" item="item" can-swipe="true" href="#/filter/infoflyer/{{item.id}}">
-                <!--<img src="{{item.img}}"></img> <div style="float:right"> Today </div> -->
+            <ion-item class="item-avatar" ng-repeat="item in informationItems | filter:searchItem" item="item" can-swipe="true" href="#/filter/{{item.type}}/{{item['flyer-id']}}">
+                <img src="{{item.avatarpic}}"></img> <div style="float:right"> {{item.date}} </div> 
                 <h2> {{item.publisher}} </h2> 
-                <p> {{item.title}}</p>
+                <p> {{item.name}}</p>
             </ion-item>
         </ion-list>
       </ion-content>
@@ -196,8 +231,8 @@
               <i class="icon ion-ios7-search placeholder-icon"></i>
               <input type="text" placeholder="Search" class="search-query" ng-model="searchItem">
             </label>
-            <ion-item class="item-avatar" ng-repeat="item in studentsaleItems | filter:searchItem" item="item" can-swipe="true" href="#/filter/infoflyer/{{item.id}}">
-                <!--<img src="{{item.img}}"></img> <div style="float:right"> Today </div> -->
+            <ion-item class="item-avatar" ng-repeat="item in studentsaleItems | filter:searchItem" item="item" can-swipe="true" href="#/filter/{{item.type}}/{{item['flyer-id']}}">
+                <img src="{{item.avatarpic}}"></img> <div style="float:right"> {{item.date}} </div>
                 <h2> {{item.publisher}} </h2> 
                 <p> {{item.title}}</p>
             </ion-item>
@@ -227,10 +262,10 @@
               <i class="icon ion-ios7-search placeholder-icon"></i>
               <input type="text" placeholder="Search" class="search-query" ng-model="searchItem">
             </label>
-            <ion-item class="item-avatar" ng-repeat="item in studentpromotionItems | filter:searchItem" item="item" can-swipe="true" href="#/filter/infoflyer/{{item.id}}">
-                <!--<img src="{{item.img}}"></img> <div style="float:right"> Today </div> -->
+            <ion-item class="item-avatar" ng-repeat="item in studentpromotionItems | filter:searchItem" item="item" can-swipe="true" href="#/filter/{{item.type}}/{{item['flyer-id']}}">
+                <img src="{{item.avatarpic}}"></img> <div style="float:right"> {{item.date}} </div> 
                 <h2> {{item.publisher}} </h2> 
-                <p> {{item.title}}</p>
+                <p> {{item.name}}</p>
             </ion-item>
         </ion-list>
       </ion-content>
@@ -258,7 +293,7 @@
               <i class="icon ion-ios7-search placeholder-icon"></i>
               <input type="text" placeholder="Search" class="search-query" ng-model="searchItem">
             </label>
-            <ion-item class="item-avatar" ng-repeat="item in generalpromotionItems | filter:searchItem" item="item" can-swipe="true" href="#/filter/infoflyer/{{item.id}}">
+            <ion-item class="item-avatar" ng-repeat="item in generalpromotionItems | filter:searchItem" item="item" can-swipe="true" href="#/filter/{{item.type}}/{{item['flyer-id']}}">
                 <!--<img src="{{item.img}}"></img> <div style="float:right"> Today </div> -->
                 <h2> {{item.publisher}} </h2> 
                 <p> {{item.title}}</p>
